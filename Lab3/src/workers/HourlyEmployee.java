@@ -20,7 +20,7 @@ public class HourlyEmployee extends Employee
 	@Override
 	public double getPaycheckAmount() {
 		// TODO Auto-generated method stub
-		return getPayRate() * getHoursWorked();
+		return payRate * hoursWorked;
 	}
 
 	@Override
@@ -31,20 +31,19 @@ public class HourlyEmployee extends Employee
 	
 	public double getHoursWorked()
 	{
-		if (hoursWorked< 0) // needs work!!!!!!!!!!
+			return hoursWorked;
+	}
+	
+	public void setHoursWorked(double hours)
+	{
+		if (hoursWorked < 0) 
 		{
 			System.out.println("ERROR: the number of hours worked cannot be < 0 ");
 		}
 		else
 		{
-			return hoursWorked;
-		}
-	}
-	
-	public void setHoursWorked(double hours)
-	{
-		
 		hoursWorked = hours;
+		}
 	}
 	
 	public void setPayRate()

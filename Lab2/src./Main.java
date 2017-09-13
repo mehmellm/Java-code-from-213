@@ -22,12 +22,6 @@ public class Main
 				System.exit(0); // terminates program
 			}
 			
-			else if (in.contains("abcdefghijklmnopqrstuvwxyz"))//if any char not an int besides operator
-			{
-				System.out.println( "ERROR: invalid number detected" );
-				break;
-			}
-			// get index of character
 			else if ( in.contains( "+" ))
 			{
 				int index = in.indexOf( "+" );
@@ -35,69 +29,88 @@ public class Main
 				if (index == 0)
 				{
 					System.out.println( "ERROR: invalid number detected" );
-					break;
+					continue;
 				}
 				else if (index != -1 )
 				{
 					String firstStr = in.substring(0 ,  index );
 					String secondStr = in.substring( index + 1 );
 					
-					System.out.println( firstStr );
-					System.out.println( secondStr );
+					firstStr = firstStr.trim();
+					secondStr = secondStr.trim();
 					
+					//System.out.println( firstStr );
+					//System.out.println( secondStr );
+					
+					try
+					{
+						int first = Integer.parseInt( firstStr );
+						int second = Integer.parseInt( secondStr );
+						
+						if (first < 0)
+						{
+							System.out.println("ERROR: negative numbers are not allowed");
+							continue;
+						}
+						
+						//System.out.println( "First int: " + first );
+						//System.out.println( "Second int: " + second );
+						System.out.println( "The result is:" + (first + second) );
+					
+					}
+					catch( Exception e )
+					{
+						System.out.println( "ERROR: invalid number detected" );
+						continue;
+					}
 					
 				}
 				
-
 			}
 			
 			else if ( in.contains( "-" ))
 			{
 				int index = in.indexOf( "-" );
 				System.out.println( "Index of plus sign: " + index );
-				if (index == 0)
-				{
-					System.out.println("ERROR: negative numbers are not allowed");
-					break;
-				}
-				else if (index != -1 )
-				{
-					String firstStr = in.substring(0 ,  index );
-					String secondStr = in.substring( index + 1 );
+				
+				String firstStr = in.substring(0 ,  index );
+				String secondStr = in.substring( index + 1 );
 					
-					System.out.println( firstStr );
-					System.out.println( secondStr );
+				firstStr = firstStr.trim();
+				secondStr = secondStr.trim();
 					
-				
+				//System.out.println( firstStr );
+				//System.out.println( secondStr );
+					
+				try
+				{
+					int first = Integer.parseInt( firstStr );
+					int second = Integer.parseInt( secondStr );
+						
+					if (first < 0)
+					{
+						System.out.println("ERROR: negative numbers are not allowed");
+						continue;
+					}
+						
+						//System.out.println( "First int: " + first );
+						//System.out.println( "Second int: " + second );
+						System.out.println( "The result is:" + (first - second) );
+					
+					}
+				catch( Exception e )
+				{
+					System.out.println( "ERROR: invalid number detected" );
+					continue;
 				}
 				
-				
-			}
+				}
 			
 			else
 			{
 				System.out.println( "ERROR: invalid or no operator specified - please try again");
-				break;
-			}
-			
-			
-			try
-			{
-				int first = Integer.parseInt( firstStr );
-				int second = Integer.parseInt( secondStr );
-				
-				System.out.println( "First int: " + first );
-				System.out.println( "Second int: " + second );
-				System.out.println( "answer is:  " + (first + second) );
-			
-			}
-			catch( Exception e )
-			{
-				System.out.println( "Error occured" );
 				continue;
 			}
-			
-			System.out.println( in );
 			
 		}
 	}

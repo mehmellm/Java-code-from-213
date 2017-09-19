@@ -3,7 +3,7 @@ package workers;
 
 public class HourlyEmployee extends Employee
 {
-	private double payRate;
+	private double payRate = 15.60;
 	private double hoursWorked;
 	
 	protected HourlyEmployee(String name) {
@@ -36,7 +36,7 @@ public class HourlyEmployee extends Employee
 	
 	public void setHoursWorked(double hours)
 	{
-		if (hoursWorked < 0) 
+		if (hours < 0) 
 		{
 			System.out.println("ERROR: the number of hours worked cannot be < 0 ");
 		}
@@ -46,9 +46,9 @@ public class HourlyEmployee extends Employee
 		}
 	}
 	
-	public void setPayRate()
+	public void setPayRate(double d)
 	{
-		payRate = 15.60;
+		payRate = d;
 	}
 	
 }

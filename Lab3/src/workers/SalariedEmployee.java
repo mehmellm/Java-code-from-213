@@ -3,7 +3,7 @@ package workers;
 
 public class SalariedEmployee extends Employee
 {
-	private double payRate = 15.60;
+	private double payRate = 83572.00;
 	
 	protected SalariedEmployee(String name) {
 		super(name);

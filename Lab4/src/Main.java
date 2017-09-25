@@ -28,6 +28,21 @@ public class Main {
 				String bufferSize = input.nextLine();
 				CopyCommand( bufferSize, fileIn, fileOut);
 			}
+			else if (s.equals( "search"))
+			{
+				System.out.println( "Please enter the path to the file to search" );
+				System.out.print( "> ");
+				String fileIn = input.nextLine();
+				System.out.println( "Please enter the term to search for" );
+				System.out.print( "> ");
+				String term = input.nextLine();
+				
+				searchCommand(fileIn, term)
+			}
+			else if (s.equals("exit"))
+			{
+				exitCommand()
+			}
 		}
 	}
 }

@@ -2,7 +2,7 @@ import java.io.*;
 
 
 
-public class CopyCommand {
+public class CopyCommand extends Main {
 	private int bufferSize;
 	private File fileIn;
 	private File fileOut;
@@ -22,10 +22,7 @@ public class CopyCommand {
 			{
 				return false;
 			}
-			else
-			{
-				return true;
-			}
+			return true;
 		}
 		else 
 		{
@@ -38,10 +35,9 @@ public class CopyCommand {
 		{
 			return false;
 		}
-		else
-		{
-			return true;	
-		}
+
+		return true;	
+		
 	}
 	public void execute()throws IOException
 	{

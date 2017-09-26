@@ -3,10 +3,14 @@ import java.util.Scanner;
 
 
 public class Main {
-	public static void main(String[] args )
+	public static void main(String[] args ) throws Exception
 	{
 		String prompt = "Please enter command (copy | search | exit)";
 		Scanner input = new Scanner (System.in);
+		Scanner fileIn = new Scanner (System.in);
+		Scanner fileOut = new Scanner (System.in);
+		Scanner bufferSize = new Scanner (System.in);
+		Scanner term = new Scanner (System.in);
 		
 		while( true )
 		{
@@ -14,34 +18,103 @@ public class Main {
 			System.out.print( "> ");
 			
 			String s = input.nextLine();
+			s = s.trim();
 			
 			if ( s.equals( "copy") )
 			{
 				System.out.println( "Please enter the path to the file to copy" );
 				System.out.print( "> ");
-				String fileIn = input.nextLine();
+				String In = fileIn.nextLine();
+				if ( In == null || In.isEmpty())
+				{
+					System.out.println("ERROR: the file name cannot be null or the empty string");
+					continue;
+				}
 				System.out.println( "Please enter the destination path" );
 				System.out.print( "> ");
-				String fileOut = input.nextLine();
+				String Out = fileOut.nextLine();
+				if ( Out == null || Out.isEmpty())
+				{
+					System.out.println("ERROR: the file name cannot be null or the empty string");
+					continue;
+				}
 				System.out.println( "Please enter the size of the read buffer" );
 				System.out.print( "> ");
-				String bufferSize = input.nextLine();
-				CopyCommand( bufferSize, fileIn, fileOut);
+				String Size = bufferSize.nextLine();
+				try 
+				{
+					File inText = new File(In);
+					File outText = new File(Out);
+					
+					int buffSize = Integer.parseInt(Size);
+					if (buffSize <= 0 )
+					{
+						System.out.println("ERROR: invalid read length: " + buffSize );
+						continue;
+					}
+				
+					CopyCommand copy = new CopyCommand( buffSize, inText, outText);
+					if (copy.validiateInputFile() && copy.validateOutputFile())
+					{
+						copy.execute();
+					}
+				}
+				
+				catch (Exception e)
+				{
+					System.out.print(e);
+				}
+
 			}
 			else if (s.equals( "search"))
 			{
 				System.out.println( "Please enter the path to the file to search" );
 				System.out.print( "> ");
-				String fileIn = input.nextLine();
+				String In = fileIn.nextLine();
+				if ( In == null || In.isEmpty())
+				{
+					System.out.println("ERROR: the file name cannot be null or the empty string");
+					continue;
+				}
 				System.out.println( "Please enter the term to search for" );
 				System.out.print( "> ");
-				String term = input.nextLine();
+				String word = term.nextLine();
+				word.equalsIgnoreCase(word);
 				
-				searchCommand(fileIn, term)
+				try
+				{
+					File inText = new File(In);
+					SearchCommand search = new SearchCommand(inText, word);
+					if (search.validateInputFile())
+					{
+						if (search.execute())
+						{
+							System.out.println("Term found!");
+						}
+						else
+						{
+							System.out.println("Term not found!");
+						}
+					}
+					
+					else
+					{
+						System.out.println("ERROR: input file does not exist ");
+						continue;
+					}
+				}
+				catch(Exception e)
+				{
+					continue;
+				}
 			}
 			else if (s.equals("exit"))
 			{
-				exitCommand()
+				System.exit(0);
+			}
+			else
+			{
+				System.out.println( "Error: Invalid command!!! please try again" );
 			}
 		}
 	}

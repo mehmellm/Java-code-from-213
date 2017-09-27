@@ -1,3 +1,14 @@
+/*  Author: Lucas Mehmel
+ * 
+ * date due: 9/27/17
+ * 
+ * objective: copy a file and read it into a new output.  searches through file for a word
+ * 
+ */
+
+
+
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -47,7 +58,7 @@ public class Main {
 					File outText = new File(Out);
 					
 					int buffSize = Integer.parseInt(Size);
-					if (buffSize <= 0 )
+					if (buffSize <= 0 || buffSize > 1024)
 					{
 						System.out.println("ERROR: invalid read length: " + buffSize );
 						continue;
@@ -62,7 +73,7 @@ public class Main {
 				
 				catch (Exception e)
 				{
-					System.out.print(e);
+					System.out.println(e);
 				}
 
 			}
@@ -76,7 +87,7 @@ public class Main {
 					System.out.println("ERROR: the file name cannot be null or the empty string");
 					continue;
 				}
-				System.out.println( "Please enter the term to search for" );
+				System.out.println( "Please enter the term to search for " );
 				System.out.print( "> ");
 				String word = term.nextLine();
 				word.equalsIgnoreCase(word);
@@ -99,7 +110,7 @@ public class Main {
 					
 					else
 					{
-						System.out.println("ERROR: input file does not exist ");
+						System.out.println("ERROR: input file does not exist: " + In);
 						continue;
 					}
 				}

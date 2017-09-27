@@ -32,10 +32,13 @@ public class SearchCommand
 
 		FileReader reader = new FileReader(fileIn);
 		BufferedReader buffReader = new BufferedReader(reader);
+		String ln = null;
+		word = word.toLowerCase();
+		
 		try
 		{
-			String ln = buffReader.readLine();
-			while ( ln != null)
+			
+			while ((ln = buffReader.readLine()) != null)
 			{
 				if (ln.contains(word))
 				{

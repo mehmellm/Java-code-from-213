@@ -82,10 +82,6 @@ public class CopyCommand extends Main {
 			bos.flush();
 		
 		}
-		catch( IOException ioe)
-		{
-			ioe.printStackTrace (System.err );
-		}
 		
 		finally
 		{

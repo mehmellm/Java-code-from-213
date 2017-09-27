@@ -5,7 +5,7 @@ public class CSList<E> implements ICSList<E>
 	
 	CSNode head = new CSNode();
 	CSNode tail = new CSNode();
-	CSNode runner = new CSNode();
+	int runner = 0;
 	/**
      * Returns the number of elements in this list.  If this list contains
      * more than <tt>Integer.MAX_VALUE</tt> elements, returns

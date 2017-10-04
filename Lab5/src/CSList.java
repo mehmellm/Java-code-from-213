@@ -26,7 +26,7 @@ public class CSList<E> implements ICSList<E>
     	while (runner != tail)
     	{
     		count = count + 1;
-    		runner = run.getNext();
+    		runner = runner.getNext();
     	}
     	return count;
     }
@@ -59,10 +59,10 @@ public class CSList<E> implements ICSList<E>
 		{
 			return false;
 		}
-		runner = runner.getNext();
+		runner = head.getNext();
 		while (runner != null )
 		{
-			if (runner.getObject() == o)
+			if (runner.getElements() == o)
 			{
 				return true;
 			}
@@ -80,7 +80,31 @@ public class CSList<E> implements ICSList<E>
      * @return <tt>true</tt> if the element was appended to this list
      */
 	@Override
-    public boolean add( E e );
+    public boolean add( E e )
+    {
+		CSNode<E> newNode = new CSNode<E>();
+		newNode.setElements(e);
+		
+		if (head.getNext() == null)
+		{
+			head.setNext(newNode);
+			tail.setPrev(newNode);
+			newNode.setPrev(head);
+			newNode.setNext(tail);
+			return true;
+		}
+		runner = head.getNext();
+		while (runner.getNext() != tail)
+		{
+			runner = runner.getNext();
+		}
+		runner.setNext(newNode);
+		newNode.setPrev(runner);
+		newNode.setNext(tail);
+		tail.setPrev(newNode);
+		
+		return true;
+    }
 
     /**
      * Removes the first occurrence of the specified element from this list,
@@ -91,8 +115,46 @@ public class CSList<E> implements ICSList<E>
      * @return <tt>true</tt> if this list contained the specified element
      */
 	@Override
-    public boolean remove( E o );
+    public boolean remove( E o )
+    {
+		CSNode<E> newNode = new CSNode();
+		
+		
+		if (head.getNext() == null)
+		{
+			return false;
+		}
 
+		if (head.getNext().getElements() == o)
+		{
+			head = head.getNext();
+			head.setElements(null);
+			head.setPrev(null);
+			return true;
+		}
+		if (tail.getPrev().getElements() == o)
+		{
+			tail = tail.getPrev();
+			tail.setElements(null);
+			tail.setNext(null);
+			return true;
+			
+		}
+		runner = head.getNext();
+		while (runner != tail)
+		{
+			if(runner.getElements() == o )
+			{
+				newNode = runner.getNext();
+				newNode.setPrev(runner.getPrev());
+				runner.getPrev().setNext(newNode);
+				runner = null;
+				return true;
+			}
+			runner = runner.getNext();
+		}
+		return false;
+    }
     /**
      * Removes all of the elements from this list.  The list will be empty after this call returns.
      */

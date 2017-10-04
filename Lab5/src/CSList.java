@@ -3,9 +3,10 @@ import java.util.Comparator;
 public class CSList<E> implements ICSList<E>
 {
 	
-	CSNode head = new CSNode();
-	CSNode tail = new CSNode();
-	int runner = 0;
+	private CSNode<E> head = new CSNode<E>();
+	private CSNode<E> tail = new CSNode<E>();
+	private CSNode<E> runner = new CSNode<E>();
+	
 	/**
      * Returns the number of elements in this list.  If this list contains
      * more than <tt>Integer.MAX_VALUE</tt> elements, returns
@@ -16,7 +17,18 @@ public class CSList<E> implements ICSList<E>
 	@Override
     public int size()
     {
-    	
+    	int count = 0;
+    	if (head.getNext() == null)
+    	{
+    		return 0;
+    	}
+    	runner = head.getNext();
+    	while (runner != tail)
+    	{
+    		count = count + 1;
+    		runner = run.getNext();
+    	}
+    	return count;
     }
 
     /**
@@ -25,8 +37,14 @@ public class CSList<E> implements ICSList<E>
      * @return <tt>true</tt> if this list contains no elements
      */
 	@Override
-    public boolean isEmpty();
-
+    public boolean isEmpty()
+	{
+		if (head.getNext() == null)
+		{
+			return true;
+		}
+		return false;
+	}
     /**
      * Returns <tt>true</tt> if this list contains the specified element.
      *
@@ -35,7 +53,24 @@ public class CSList<E> implements ICSList<E>
      * @return <tt>true</tt> if this list contains the specified element
      */
 	@Override
-    public boolean contains( E o );
+    public boolean contains( E o )
+    {
+		if (head.getNext() == null)
+		{
+			return false;
+		}
+		runner = runner.getNext();
+		while (runner != null )
+		{
+			if (runner.getObject() == o)
+			{
+				return true;
+			}
+			runner = runner.getNext();
+		}
+		return false;
+		}
+    }
 
     /**
      * Appends the specified element to the end of this list.

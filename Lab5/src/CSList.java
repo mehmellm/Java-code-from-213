@@ -69,7 +69,7 @@ public class CSList<E> implements ICSList<E>
 			runner = runner.getNext();
 		}
 		return false;
-		}
+		
     }
 
     /**
@@ -384,5 +384,26 @@ public class CSList<E> implements ICSList<E>
      *                   order of the elements.
      */
 	@Override
-    public void sort( Comparator<E> comparator );
+    public void sort( Comparator<E> comparator )
+    {
+		CSNode<E> tempNode = new CSNode<E>();
+		E el1 = null;
+		E el2 = null;
+		
+		for (int n = 1;  n < size(); n++)
+		{
+			for (int m = n; m > 0; m--)
+			{
+				el1 = get(m);
+				el2 = get(m-1);
+				if (comparator.compare(el1, el2) == -1)
+				{
+					tempNode.setElements(el1);
+					set(m,el2);
+					set(m-1, tempNode.getElements());
+				}
+			}
+		}
+    }
+    
 }

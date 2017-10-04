@@ -159,7 +159,11 @@ public class CSList<E> implements ICSList<E>
      * Removes all of the elements from this list.  The list will be empty after this call returns.
      */
 	@Override
-    public void clear();
+    public void clear()
+    {
+		head.setNext(null);
+		tail.setPrev(null);
+    }
 
     /**
      * Returns the element at the specified position in this list.
@@ -172,7 +176,30 @@ public class CSList<E> implements ICSList<E>
      *         (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
 	@Override
-    E get( int index );
+    public E get( int index )
+    {
+		int in = index;
+		int count = 0;
+		if (in > size() || in < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		if (in == 0 )
+		{
+			return (E) head.getNext().getElements();
+		}
+		runner = head.getNext();
+		while (runner != tail)
+		{
+			if (count == in)
+			{
+				return runner.getElements();
+			}
+			count = count + 1;
+			runner = runner.getNext();
+		}
+		return null;
+    }	
 
     /**
      * Replaces the element at the specified position in this list with the
@@ -187,7 +214,38 @@ public class CSList<E> implements ICSList<E>
      *         (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
 	@Override
-    public E set( int index, E element );
+    public E set( int index, E element )
+    {
+		int in = index;
+		int count = 0;
+		E data = null;
+		
+		if (in > size() || in < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		if (in == 0 )
+		{
+			data = (E) head.getNext().getElements();
+			head.getNext().setElements(element);
+			return data;
+		}
+		runner = head.getNext();
+		while ( runner != tail )
+		{
+			if (count == in)
+			{
+				data = runner.getElements();
+				runner.setElements(element);
+				return data;
+				
+			}
+			count = count + 1;
+			runner = runner.getNext();
+		}
+		return null;
+		
+    }	
 
     /**
      * Inserts the specified element at the specified position in this list.
@@ -201,7 +259,41 @@ public class CSList<E> implements ICSList<E>
      *         (<tt>index &lt; 0 || index &gt; size()</tt>)
      */
 	@Override
-    public void add( int index, E element );
+    public void add( int index, E element )
+    {
+		int count = 0;
+		int in = index;
+		CSNode<E> newNode = new CSNode<E>();
+		newNode.setElements(element);
+		CSNode<E> temp = new CSNode<E>();
+		
+		if (in > size() || in < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		if( in == 0)
+		{
+			temp = head.getNext();
+			head.setNext(newNode);
+			newNode.setNext(temp);
+			newNode.setPrev(head);
+		}
+		runner = head.getNext();
+		while (runner!= tail)
+		{
+			if (count == in)
+			{
+				temp = runner.getPrev();
+				runner.getPrev().setNext(newNode);
+				newNode.setPrev(temp);
+				newNode.setNext(runner);
+				runner.setPrev(newNode);
+			}
+			count = count + 1;
+			runner = runner.getNext();
+		}
+    }
+	
 
     /**
      * Removes the element at the specified position in this list.  Shifts any 
@@ -216,7 +308,43 @@ public class CSList<E> implements ICSList<E>
      *         (<tt>index &lt; 0 || index &gt;= size()</tt>)
      */
 	@Override
-    public E remove( int index );
+    public E remove( int index )
+    {
+		int in = index;
+		CSNode<E> newNode = new CSNode<E>();
+		E data = null;
+		int count = 0;
+		
+		if (in > size() || in < 0)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		if (in == 0 )
+		{
+			data = (E) head.getNext().getElements();
+			head = head.getNext();
+			head.setPrev(null);
+			head.setElements(null);
+			return data;
+		}
+		runner = head.getNext();
+		while ( runner != tail )
+		{
+			if (count == in)
+			{
+				data = runner.getElements();
+				newNode.setPrev(runner.getPrev());
+				runner = runner.getNext();
+				runner.setPrev(newNode.getPrev());
+				return data;
+				
+			}
+			count = count + 1;
+			runner = runner.getNext();
+		}
+		return null;
+		
+    }	
 
     /**
      * Returns the index of the first occurrence of the specified element
@@ -228,7 +356,25 @@ public class CSList<E> implements ICSList<E>
      *         this list, or -1 if this list does not contain the element
      */
 	@Override
-    public int indexOf( E o );
+    public int indexOf( E o )
+    {
+		int in = 0;
+		if (head.getNext().getElements() == o)
+		{
+			return 0;
+		}
+		runner = head.getNext();
+		while (runner != tail)
+		{
+			if (runner.getElements() == o)
+			{
+				return in;
+			}
+			in = in + 1;
+			runner = runner.getNext();
+		}
+		return -1;
+    }
     
     /**
      * Sorts the elements in this instance in descending order according to the input

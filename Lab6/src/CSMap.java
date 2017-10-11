@@ -32,8 +32,15 @@ public class CSMap<K, V> implements ICSMap<K, V>
     public V get( K key )
     {
         // TODO: add implementation
-    	
-    	
+    	int numBuck = getBucket(key);
+    	for (int i = 0; i < buckets.get(numBuck).size(); i++)
+    	{
+    		if ( buckets.get(numBuck).get(i).getKey().equals(key)))
+    		{
+    			return buckets.get(numBuck).get(i).getValue();
+    		}
+    	}
+    
         return null;
     }
 
@@ -41,6 +48,7 @@ public class CSMap<K, V> implements ICSMap<K, V>
     public V put( K key, V value )
     {
         // TODO: add implementation
+    	
         return null;
     }
 

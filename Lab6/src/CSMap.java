@@ -35,7 +35,7 @@ public class CSMap<K, V> implements ICSMap<K, V>
     	int numBuck = getBucket(key);
     	for (int i = 0; i < buckets.get(numBuck).size(); i++)
     	{
-    		if ( buckets.get(numBuck).get(i).getKey().equals(key)))
+    		if ( buckets.get(numBuck).get(i).getKey().equals(key))
     		{
     			return buckets.get(numBuck).get(i).getValue();
     		}
@@ -48,7 +48,19 @@ public class CSMap<K, V> implements ICSMap<K, V>
     public V put( K key, V value )
     {
         // TODO: add implementation
-    	
+    	int numBuck = getBucket(key);
+    	V temp = null;
+    	CSEntry<K,V> pair = new CSEntry<K,V>(key,value);
+    	for (int i = 0; i < buckets.get(numBuck).size(); i++)
+    	{
+    		if ( buckets.get(numBuck).get(i).getKey().equals(key))
+    		{
+    			temp = buckets.get(numBuck).get(i).getValue();
+    			buckets.get(numBuck).get(i).setValue(value);
+    			return temp;
+    		}
+    	}
+    	buckets.get(numBuck).add(pair);
         return null;
     }
 

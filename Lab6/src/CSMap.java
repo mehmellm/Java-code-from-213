@@ -74,7 +74,7 @@ public class CSMap<K, V> implements ICSMap<K, V>
     	{
     		for (int n = 0; n < buckets.get(i).size(); n++)
     		{
-    			keys.add(buckets.get(i).get(k).getKey());
+    			keys.add(buckets.get(i).get(n).getKey());
     		}
     	}
         return keys;
@@ -84,6 +84,14 @@ public class CSMap<K, V> implements ICSMap<K, V>
     public boolean containsKey( K key )
     {
         // TODO: add implementation
+    	int numBuck = 0;
+    	for (int i = 0; i < buckets.get(numBuck).size(); i++)
+    	{
+    		if ( buckets.get(numBuck).get(i).getKey().equals(key))
+    		{
+    			return true;
+    		}
+    	}
         return false;
     }
     

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -68,7 +69,15 @@ public class CSMap<K, V> implements ICSMap<K, V>
     public List<K> getKeys()
     {
         // TODO: add implementation
-        return null;
+    	LinkedList<K> keys = new LinkedList<K>();
+    	for (int i = 0; i < MAX_BUCKETS; i++)
+    	{
+    		for (int n = 0; n < buckets.get(i).size(); n++)
+    		{
+    			keys.add(buckets.get(i).get(k).getKey());
+    		}
+    	}
+        return keys;
     }
 
     @Override

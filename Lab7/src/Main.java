@@ -4,15 +4,15 @@ import java.util.Scanner;
 
 public class Main
 {
-	public static void Main(String[] args)
+	public static void main(String[] args)
 	{
-		String prompt = "Please enter a non-negative, non-zero integer (q to exit)";
+		String prompt = "Please enter a non-negative, non-zero integer (q to exit) ";
 		String prompt2 = "Please select an option for computation: ";
 		Scanner input = new Scanner (System.in);
 		
 		while(true)
 		{
-			System.out.println( prompt );
+			System.out.print( prompt );
 			String inte = input.nextLine();
 			int integer = 0;
 			if (inte.equals("q"))

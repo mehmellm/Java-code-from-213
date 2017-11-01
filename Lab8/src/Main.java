@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 
-/**Makes a simple UI
+/**Makes a simple UI that has 2 buttons
  * 
  * @author Lucas Mehmel
  *
@@ -38,11 +38,12 @@ public class Main {
 						   				   new Insets( 5, 5, 5, 5 ), 0, 0 ) );
 		panel.add( button2,
 				   new GridBagConstraints( 1, 0, 1, 1, 0.5, 0.5, 
-		   				   				   GridBagConstraints.FIRST_LINE_START,
+		   				   				   GridBagConstraints.FIRST_LINE_END,
 		   				   				   GridBagConstraints.BOTH,
 		   				   				   new Insets( 5, 5, 5, 5 ), 0, 0 ) );
 	
 		label.setOpaque( true );
+		label.setHorizontalAlignment(0);
 		//label.addMouseListener(new MouseAdapter()
 		//{
 		//	@Override
@@ -52,10 +53,10 @@ public class Main {
 		//	}
 		
 		panel.add( label,
-				new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+				new GridBagConstraints(0, 1, 2, 2, 1.0, 1.0,
 										GridBagConstraints.CENTER,
 										GridBagConstraints.BOTH,
-										new Insets( 20,20,100,50),0,0));
+										new Insets(5,5,5,5),0,0));
 		frame.add(panel);
 		frame.pack();
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);

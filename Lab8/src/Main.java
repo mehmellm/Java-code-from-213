@@ -21,43 +21,46 @@ import javax.swing.SwingUtilities;
  *
  */
 public class Main {
+	
+	
+	static JLabel label = new JLabel("Press a button");
 	public static void main( String[] args )
 	{
 		final JFrame frame = new JFrame();
 		JPanel panel = new JPanel( new GridBagLayout() );
-		JButton button1 = new JButton( "Button 1" );
-		JButton button2 = new JButton( "Button 2" );
+		JButton button1 = new JButton( new Button1Action() );
+		JButton button2 = new JButton( new Button2Action() );
 		
 		panel.add( button1,
-				   new GridBagConstraints( 0, 0, 1, 1, 0.3, 0.0,
+				   new GridBagConstraints( 0, 0, 1, 1, 0.5, 0.5,
 						   				   GridBagConstraints.FIRST_LINE_START,
-						   				   GridBagConstraints.NONE,
+						   				   GridBagConstraints.BOTH,
 						   				   new Insets( 5, 5, 5, 5 ), 0, 0 ) );
 		panel.add( button2,
-				   new GridBagConstraints( 1, 0, 1, 1, 0.3, 0.0, 
+				   new GridBagConstraints( 1, 0, 1, 1, 0.5, 0.5, 
 		   				   				   GridBagConstraints.FIRST_LINE_START,
-		   				   				   GridBagConstraints.NONE,
+		   				   				   GridBagConstraints.BOTH,
 		   				   				   new Insets( 5, 5, 5, 5 ), 0, 0 ) );
-		JLabel label = new JLabel("Press a button");
-		//label.setBackground( Color.RED );
+	
 		label.setOpaque( true );
-		label.addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				JOptionPane.showMessageDialog(null,  "Mouse clicked ");
-			}
-		});
+		//label.addMouseListener(new MouseAdapter()
+		//{
+		//	@Override
+		//	public void mouseClicked(MouseEvent e)
+		//	{
+			//	JOptionPane.showMessageDialog(null,  "Mouse clicked ");
+		//	}
+		
 		panel.add( label,
-				new GridBagConstraints(0, 3,1,1,0.0,0.0,
-										GridBagConstraints.FIRST_LINE_START,
+				new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+										GridBagConstraints.CENTER,
 										GridBagConstraints.BOTH,
 										new Insets( 20,20,100,50),0,0));
 		frame.add(panel);
 		frame.pack();
 		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
+		
 		
 		SwingUtilities.invokeLater( new Runnable() 
 		{
@@ -68,23 +71,42 @@ public class Main {
 			}
 		});
 				
-		/**
+	}
 		private static class Button1Action extends AbstractAction
 		{
 			public Button1Action()
 			{
 				super();
-				
-				putValue( AbstractAction.NAME, "Button1" );
+				 
+				putValue( AbstractAction.NAME, "Button 1" );
 				putValue( AbstractAction.SHORT_DESCRIPTION, "My awesome hover text" );
 			}
 			
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-				JOptionPane.showMessageDialog( null, "Button1 Clicked!!" );
+				label.setBackground(Color.CYAN);
+				label.setText("Button 1 clicked!");
+				//JOptionPane.showMessageDialog( null, "Button1 Clicked!!" );
 			}
-		}*/
-	}
+		}
+		private static class Button2Action extends AbstractAction
+		{
+			public Button2Action()
+			{
+				super();
+				
+				putValue( AbstractAction.NAME, "Button 2" );
+				putValue( AbstractAction.SHORT_DESCRIPTION, "My awesome hover text" );
+			}
+			
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+				label.setBackground( Color.yellow );
+				label.setText("Button 2 clicked!");
+				//JOptionPane.showMessageDialog( null, "Button1 Clicked!!" );
+			}
+	}}
 
-}
+

@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 public class CSTree<T>
 {
+	CSTreeNode<T> newnode; 
 	CSTreeNode<T >node;
 	Comparator<T> comparator;
     public CSTree( Comparator<T> comparator )
@@ -14,11 +15,10 @@ public class CSTree<T>
     {
     	if  (node == null )
     	{
-    		node = new CSTreeNode<T>();
-    		node.setValue(value);
-    		node.setLeftChild(null);
-    		node.setRightChild(null);
-    		return null;
+    		newnode = new CSTreeNode<T>();
+    		newnode.setParent(node);
+    		newnode.setValue(value);
+    		
     	}
     	else
     	{
@@ -86,21 +86,54 @@ public class CSTree<T>
     public int size()
     {
         // TODO: return the number of data items stored in the tree
-        return 0;
+    	if ( node == null)
+    	{
+    		return 0;
+    	}
+    	
     }
     
     public void traverseInorder( PrintWriter pw )
     {
         // TODO: perform in-order traversal
+    	inorderTraverse (node, pw);
+    }
+    private void inorderTraverse(CSTreeNode<T> node, PrintWriter pw)
+    {
+    	if (node != null)
+    	{
+    		inorderTraverse(node.getLeftChild(), pw);
+    		pw.println("Node: " + node.toString() );
+    		inorderTraverse( node.getRightChild(), pw);
+    	}
     }
     
     public void traversePreorder( PrintWriter pw )
     {
         // TODO: perform pre-order traversal
+    	preorderTraverse (node, pw);
     }
-    
+    private void preorderTraverse(CSTreeNode<T> node, PrintWriter pw)
+    {
+    	if (node != null)
+    	{
+    		pw.println("Node: " + node.toString() );
+    		inorderTraverse(node.getLeftChild(), pw);
+    		inorderTraverse( node.getRightChild(), pw);
+    	}
+    }
     public void traversePostOrder( PrintWriter pw )
     {
         // TODO: perform post-order traversal
+    	postorderTraverse( node, pw);
+    }
+    private void postorderTraverse(CSTreeNode<T> node, PrintWriter pw)
+    {
+    	if (node != null)
+    	{
+    		inorderTraverse(node.getLeftChild(), pw);
+    		inorderTraverse( node.getRightChild(), pw);
+    		pw.println("Node: " + node.toString() );
+    	}
     }
 }

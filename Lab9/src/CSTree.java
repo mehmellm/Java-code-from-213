@@ -120,7 +120,7 @@ public class CSTree<T>
     	if (node != null)
     	{
     		inorderTraverse(node.getLeftChild(), pw);
-    		pw.println("Node: " + node.getValue() );
+    		pw.print(node.getValue() + " ");
     		pw.flush();
     		inorderTraverse( node.getRightChild(), pw);
     	}
@@ -135,7 +135,7 @@ public class CSTree<T>
     {
     	if (node != null)
     	{
-    		pw.println("Node: " + node.getValue() );
+    		pw.print(node.getValue() + " ");
     		pw.flush();
     		preorderTraverse(node.getLeftChild(), pw);
     		preorderTraverse( node.getRightChild(), pw);
@@ -152,7 +152,7 @@ public class CSTree<T>
     	{
     		postorderTraverse(node.getLeftChild(), pw);
     		postorderTraverse( node.getRightChild(), pw);
-    		pw.println("Node: " + node.getValue() );
+    		pw.print(node.getValue() + " ");
     		pw.flush();
     	}
     }

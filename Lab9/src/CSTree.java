@@ -1,28 +1,35 @@
 import java.io.PrintWriter;
-
 import java.util.Comparator;
+import java.util.LinkedList;
+/*
+ * Author: Lucas Mehmel
+ * 
+ */
 
 public class CSTree<T>
 {
-	CSTreeNode<T> newnode; 
-	CSTreeNode<T >node;
-	Comparator<T> comparator;
+	int count = 0 ;
+	//CSTreeNode<T> newnode; 
+	private CSTreeNode<T> root = new CSTreeNode<T>();
+	//CSTreeNode<T> node;
+	private Comparator<T> comparator;
     public CSTree( Comparator<T> comparator )
     {
-        comparator = comparator;
+        this.comparator = comparator;
     }
     private CSTreeNode<T> insertNode(CSTreeNode<T> node, T value)
     {
     	if  (node == null )
     	{
-    		newnode = new CSTreeNode<T>();
-    		newnode.setParent(node);
-    		newnode.setValue(value);
+    		node = new CSTreeNode<T>();
+    		//newnode.setParent(null);
+    		//newnode.setRoot(true);
+    		node.setValue(value);
     		
     	}
     	else
     	{
-    		int num = comparator.compare(value,node.getValue());
+    		int num = comparator.compare(value, node.getValue());
     		if ( num == 0)
     		{
     			return null;
@@ -41,8 +48,16 @@ public class CSTree<T>
     public void add( T value )
     {
         // TODO: add the value to the tree
-    	
-    	insertNode(node, value); 
+    	if (root.getValue() == null)
+    	{
+    		root.setValue(value);
+    		root.setRoot(true);
+    	}
+    	else
+    	{
+    		insertNode(root, value); 
+    	}
+    	count = count + 1;
     
     }
     
@@ -54,22 +69,23 @@ public class CSTree<T>
     public boolean contains( T value )
     {
         // TODO: determine if the value is contained within the tree - note this requires a traversal!
-    	node = findNode( node, value);
-    	if (node == null)
+    	CSTreeNode<T> found = new CSTreeNode<T>(); 
+    	found = findNode(root, value);
+    	if (!found.getValue().equals(null))
     	{
-    		return false;
+    		return true;
     	}
-    	else {
-    	return true;
-    	}
+    	
+    	return false;
+    	
     }
-    private CSTreeNode<T> findNode( CSTreeNode<T> node, T value)
+    private CSTreeNode<T> findNode(CSTreeNode<T> node, T value)
     {
-    	if (node == null)
+    	if (node.getValue().equals(null))
     	{
     		return null;
     	}
-    	int num = comparator.compare(node.getValue(), value);
+    	int num = comparator.compare(value, node.getValue());
     	if (num == 0)
     	{
     		return node;
@@ -80,30 +96,32 @@ public class CSTree<T>
     	}
     	else
     	{
-    		return findNode(node.getRightChild(),value);
+    		return findNode(node.getRightChild(), value);
     	}
     }
     public int size()
     {
         // TODO: return the number of data items stored in the tree
-    	if ( node == null)
+    	if ( root == null)
     	{
     		return 0;
     	}
+    	return count;
     	
     }
     
     public void traverseInorder( PrintWriter pw )
     {
         // TODO: perform in-order traversal
-    	inorderTraverse (node, pw);
+    	inorderTraverse (root, pw);
     }
     private void inorderTraverse(CSTreeNode<T> node, PrintWriter pw)
     {
     	if (node != null)
     	{
     		inorderTraverse(node.getLeftChild(), pw);
-    		pw.println("Node: " + node.toString() );
+    		pw.println("Node: " + node.getValue() );
+    		pw.flush();
     		inorderTraverse( node.getRightChild(), pw);
     	}
     }
@@ -111,13 +129,14 @@ public class CSTree<T>
     public void traversePreorder( PrintWriter pw )
     {
         // TODO: perform pre-order traversal
-    	preorderTraverse (node, pw);
+    	preorderTraverse (root, pw);
     }
     private void preorderTraverse(CSTreeNode<T> node, PrintWriter pw)
     {
     	if (node != null)
     	{
-    		pw.println("Node: " + node.toString() );
+    		pw.println("Node: " + node.getValue() );
+    		pw.flush();
     		inorderTraverse(node.getLeftChild(), pw);
     		inorderTraverse( node.getRightChild(), pw);
     	}
@@ -125,7 +144,7 @@ public class CSTree<T>
     public void traversePostOrder( PrintWriter pw )
     {
         // TODO: perform post-order traversal
-    	postorderTraverse( node, pw);
+    	postorderTraverse( root, pw);
     }
     private void postorderTraverse(CSTreeNode<T> node, PrintWriter pw)
     {
@@ -133,7 +152,8 @@ public class CSTree<T>
     	{
     		inorderTraverse(node.getLeftChild(), pw);
     		inorderTraverse( node.getRightChild(), pw);
-    		pw.println("Node: " + node.toString() );
+    		pw.println("Node: " + node.getValue() );
+    		pw.flush();
     	}
     }
 }

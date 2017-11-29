@@ -1,3 +1,7 @@
+/*
+ * Author: Lucas Mehmel
+ */
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -58,7 +62,7 @@ public class UnweightedNonDirectionalGraph<E> implements Graph<E>
 		ArrayList<Edge<Node<E>>> adj = new ArrayList<Edge<Node<E>>>();
 		for (Edge<Node<E>> edge : edgeSet)
 		{
-			if (edge.getStart().equals(node))
+			if (edge.getStart().equals(node) || edge.getStart().equals(node))
 			{
 				adj.add(edge);
 			}

@@ -1,4 +1,6 @@
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,18 +25,52 @@ public class LinkedListImplTest
 	public void testSize()
 	{
 	    // TODO: implement the unit test for size()
+		List<Integer> emptyList = generateEmptyList();
+		List<Integer> populatedList = generatePopulatedList(10);
+		
+		assertNotNull(emptyList);
+		assertNotNull(populatedList);
+		
+		assertEquals(0, emptyList.size());
+		//assertEquals(0, populatedList.size());
+		/**
+		for ( int i = 0 ; i < Integer.MAX_VALUE +2; i++)
+		{
+			emptyList.add(i);
+		}
+		*/
 	}
 	
 	@Test
 	public void testIsEmpty()
 	{
 	    // TODO: implement the unit test for isEmpty()
+		List<Integer> populatedList = generatePopulatedList(10);
+		List<Integer> emptyList = generateEmptyList();
+		
+		assertNotNull(emptyList);
+		assertNotNull(populatedList);
+		
+		assertTrue(emptyList.isEmpty());
+		assertFalse(populatedList.isEmpty());
+		
 	}
 	
 	@Test
 	public void testContains()
 	{
 	    // TODO: implement the unit test for contains()
+		List<Integer> populatedList = generatePopulatedList(10);
+		Integer num = 6;
+		Integer num2 = 11;
+		
+		assertNotNull(populatedList);
+		assertNotNull(num);
+		assertNotNull(num2);
+		
+		assertTrue(populatedList.contains(num));
+		assertFalse(populatedList.contains(num2));
+		
 	}
 	
 	@Test
@@ -50,6 +86,20 @@ public class LinkedListImplTest
 		 * 		4a. Testing if the size increased by a single increment
 		 * 		4b. Testing if the object is now contained in the list
 		 */
+		List<Integer> list = generatePopulatedList(10);
+		Integer number = 11;
+		
+		assertNotNull(list);
+		assertNotNull(number);
+		
+		Integer listSize = list.size();
+		
+		assertEquals(new Integer(10), new Integer(listSize));
+		
+		assertTrue( list.add(number));
+		assertEquals(11, list.size());
+		assertEquals(10, list.indexOf(number));
+		assertTrue(list.contains(number));
 	}
 	
 	@Test
@@ -69,6 +119,25 @@ public class LinkedListImplTest
 		 * 		5b. Testing if the list throws an exception if the index falls outside the bounds of
 		 * 			valid indicies (0 <= index < size()).
 		 */
+		List<Integer> list = generatePopulatedList(10);
+		
+		assertNotNull(list);
+		
+		Integer size1 = list.size();
+		assertEquals(10, (int)size1);
+		list.add(0,4);
+		
+		assertEquals(11, list.size());
+		assertTrue(list.contains(4));
+		try
+		{
+			list.add(-1,10);
+			fail("Exception not thrown");
+		}
+		catch(IndexOutOfBoundsException ioe)
+		{
+			assertTrue(true);
+		}
 	}
 	
 	@Test
@@ -89,6 +158,26 @@ public class LinkedListImplTest
 		 * 		7b. Testing if the size of the list equals the original size before the element was added
 		 * 		7c. Testing if the object is not contained within the list
 		 */
+		
+		List<Integer> list = generatePopulatedList(10);
+		Integer x = 40;
+		
+		assertNotNull(x);
+		assertNotNull(list);
+		
+		Integer size1 = list.size();
+		assertEquals(10, (int) size1);
+		
+		list.add(x);
+		assertEquals(11, list.size());
+		assertTrue(list.contains(x));
+		
+		list.remove(x);
+		assertEquals(10, list.size());
+		assertEquals((int)size1, list.size());
+		assertFalse(list.contains(x));
+		
+		
 	}
 	
 	/**

@@ -20,19 +20,17 @@ import javax.swing.SwingUtilities;
 
 public class UIMain 
 {
+	public static JPanel 		 panel1   = new JPanel( new GridBagLayout() );
 	static JLabel label = new JLabel( "Press a button" );
 	public static JProgressBar progBar = new JProgressBar();
 	public static JTextArea   txtField =  new JTextArea();
+	public final static JFrame frame   = new JFrame();
+	public static JButton button1 = new JButton( new Button1Action() );
 	
 	
 	public static void main( String[] args )
 	{
-		JPanel 		 panel1   = new JPanel( new GridBagLayout() );
-		//public static JPanel 		 panel2   = new JPanel( new GridBagLayout() );
-		final JFrame frame   = new JFrame();
-		JTextArea   txtField =  new JTextArea();
-		JButton button1 = new JButton( new Button1Action() );
-		JProgressBar progBar = new JProgressBar();
+	
 		
 		
 		
@@ -41,24 +39,24 @@ public class UIMain
 		
 		txtField.setEditable(false);
 		txtField.setEnabled(true);
-		//txtField.append("high");
+		txtField.append("");
 		txtField.setColumns(35);
 		txtField.setRows(20);
 		txtField.setBounds(20,20,20,20);
 		progBar.setIndeterminate(false);
 		
 		panel1.add(txtField, new GridBagConstraints( 0, 0, 1, 1, 0.0, 0.0,
-				   GridBagConstraints.FIRST_LINE_START,
-				   GridBagConstraints.BOTH,
+				   GridBagConstraints.CENTER,
+				   GridBagConstraints.CENTER,
 				   new Insets( 5,5,5,5 ), 0, 0 ) );
-		panel1.add(button1, new GridBagConstraints( 1, 2 , 1, 1, 1.5, 1.5,
-				   GridBagConstraints.FIRST_LINE_END,
+		panel1.add(button1, new GridBagConstraints( 1, 1 , 1, 1, 1.5, 1.5,
 				   GridBagConstraints.EAST,
-				   new Insets( 5,5,5,5 ), 0, 0 ) );
+				   GridBagConstraints.EAST,
+				   new Insets( 5,5,5,5 ), 2, 2 ) );
 		panel1.add(progBar, new GridBagConstraints( 0, 1, 1, 1, 1.5, 1.5,
-				   GridBagConstraints.FIRST_LINE_START,
 				   GridBagConstraints.WEST,
-				   new Insets( 5,5,5,5 ), 0, 0 ) );
+				   GridBagConstraints.WEST,
+				   new Insets( 5,5,5,5 ), 5, 5 ) );
 		
 		
 		frame.add(panel1);
@@ -68,6 +66,7 @@ public class UIMain
 		frame.setLocationRelativeTo( null); 
 		frame.setResizable(true);
 		frame.setSize(500, 500);
+		
 
 		SwingUtilities.invokeLater( new Runnable() 
 		{
@@ -97,15 +96,31 @@ public class UIMain
 				ExecutorService es = Executors.newSingleThreadExecutor();
 				try
 				{
+					SwingUtilities.invokeLater( new Runnable() 
+					{
+						@Override
+						public void run()
+						{
+							progBar.setIndeterminate(true);
+						}
+					});
 					File fil = new File("sample.txt");
 					Future<String> task = es.submit(new SearchCallable(fil, word ));
 					String term = task.get();
 					System.out.println(term);
 				
-					UIMain.txtField.append(term);
-					txtField.append("FOUND");	
-					
+					//UIMain.txtField.append(term);
+					SwingUtilities.invokeLater( new Runnable() 
+					{
+						@Override
+						public void run()
+						{
+							txtField.append("\n" + term);
+							progBar.setIndeterminate(false);
+						}
+					});
 				}
+				
 				catch (Exception e1)
 				{
 					e1.printStackTrace();
@@ -115,6 +130,7 @@ public class UIMain
 			}
 			
 		}
+		
 }
 	
 

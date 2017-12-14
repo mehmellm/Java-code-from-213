@@ -2,8 +2,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -19,7 +21,9 @@ import javax.swing.SwingUtilities;
 public class UIMain 
 {
 	static JLabel label = new JLabel( "Press a button" );
-
+	public static JProgressBar progBar = new JProgressBar();
+	public static JTextArea   txtField =  new JTextArea();
+	
 	
 	public static void main( String[] args )
 	{
@@ -30,12 +34,14 @@ public class UIMain
 		JButton button1 = new JButton( new Button1Action() );
 		JProgressBar progBar = new JProgressBar();
 		
+		
+		
 		label.setOpaque( true );
 		label.setHorizontalAlignment(0);
 		
 		txtField.setEditable(false);
 		txtField.setEnabled(true);
-		txtField.setText("");
+		//txtField.append("high");
 		txtField.setColumns(35);
 		txtField.setRows(20);
 		txtField.setBounds(20,20,20,20);
@@ -86,21 +92,29 @@ public class UIMain
 				// TODO Auto-generated method stub
 				//JOptionPane.showMessageDialog(null, "Please Enter a word to look for");
 				String word = JOptionPane.showInputDialog("Please Enter a word to look for");
-				System.out.println(word);
-				
+				//System.out.println(word);
+				progBar.setIndeterminate(true);
 				ExecutorService es = Executors.newSingleThreadExecutor();
-				if (word.isEmpty())
+				try
 				{
+					File fil = new File("sample.txt");
+					Future<String> task = es.submit(new SearchCallable(fil, word ));
+					String term = task.get();
+					System.out.println(term);
+				
+					UIMain.txtField.append(term);
+					txtField.append("FOUND");	
 					
 				}
-				else
+				catch (Exception e1)
 				{
-					searchCallable("sample.txt", word);
+					e1.printStackTrace();
 				}
+	
+				
 			}
 			
 		}
-
-	}
+}
 	
 
